@@ -40,7 +40,7 @@ module.exports = function(RED) {
 
         node.ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
         function(connectReason) {
-            node.t = new Tinkerforge.BrickletRotaryPoti(node.sensor, node.ipcon);
+            node.t = new Tinkerforge.BrickletRotaryPotiV2(node.sensor, node.ipcon);
 
             node.interval = setInterval(function(){
                 if (node.t) {
@@ -65,5 +65,5 @@ module.exports = function(RED) {
 
     }
 
-    RED.nodes.registerType('TinkerForge RotaryPoti', tinkerForgeRotaryPoti);
+    RED.nodes.registerType('TinkerForge RotaryPotiV2', tinkerForgeRotaryPoti);
 };
