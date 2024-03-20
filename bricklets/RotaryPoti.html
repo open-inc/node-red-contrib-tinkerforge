@@ -63,7 +63,7 @@
 			return this.name || "TinkerForge RotaryPotiV2";
 		},
 		paletteLabel: 'RotaryPotiV2',
-		color: 'gray',
+		color: 'red',
 		icon: 'tf.png',
 		oneditprepare: function() {
 			var node = this;
@@ -71,6 +71,7 @@
 			if (node.device) {
 				var key = $('#node-input-device').val();
 				$.getJSON('TinkerForge/' + key +"/sensors/" + 2140, function(data){
+					console.log("DATA: ", data)
 					$('#node-input-sensor').find('option').remove().end();
 					for (d in data) {
 						$('<option/>',{
@@ -91,6 +92,7 @@
 				if (dev) {
 					var key = dev;
 					$.getJSON('TinkerForge/' + key +"/sensors/" + 2140, function(data){
+						console.log("DATA2: ", data)
 						$('#node-input-sensor').find('option').remove().end();
 						for (d in data) {
 							$('<option/>',{
