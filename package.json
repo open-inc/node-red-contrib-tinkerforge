@@ -39,6 +39,7 @@
     "nodes": {
         "config": "lib/config.js",
         "motion": "bricklets/Motion.js",
+        "motionV2": "bricklets/MotionV2.js",
         "humidity": "bricklets/Humidity.js",
         "humidityV2": "bricklets/HumidityV2.js",
         "moisture": "bricklets/Moisture.js",
