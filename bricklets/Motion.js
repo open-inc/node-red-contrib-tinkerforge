@@ -29,16 +29,17 @@ module.exports = function(RED) {
         this.topic = n.topic;
         var node = this;
 
-        node.ipcon = new Tinkerforge.IPConnection(); //devices[this.device].ipcon;
+        node.ipcon = new Tinkerforge.IPConnection();
         node.ipcon.setAutoReconnect(true);
         var devs = devices.getDevices();
-        node.ipcon.connect(devs[node.device].host, devs[node.device].port,function(error){
-            if(error) {
-                node.warn("couldn't connect");
-            }
-        });
 
         try {
+            node.ipcon.connect(devs[node.device].host, devs[node.device].port,function(error){
+                if(error) {
+                    node.warn("couldn't connect");
+                }
+            });
+        
             node.ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED, function(connectReason) {
             node.md = new Tinkerforge.BrickletMotionDetector(node.sensor, node.ipcon);
             node.md.on(Tinkerforge.BrickletMotionDetector.CALLBACK_MOTION_DETECTED,detected);
