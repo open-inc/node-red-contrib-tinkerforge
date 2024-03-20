@@ -17,7 +17,7 @@
 
 
 "use strict";
-var Tinkerforge = require('tinkerforge');
+var Tinkerforge = require('tinkerforge-openinc');
 var devices = require('../lib/devices');
 
 module.exports = function(RED) {

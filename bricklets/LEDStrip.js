@@ -16,7 +16,7 @@
 
 
 "use strict";
-var Tinkerforge = require('tinkerforge');
+var Tinkerforge = require('tinkerforge-openinc');
 var colours = require('../lib/colours');
 var devices = require('../lib/devices');
 

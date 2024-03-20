@@ -15,7 +15,7 @@
  **/
  
 
-var Tinkerforge = require('tinkerforge');
+var Tinkerforge = require('tinkerforge-openinc');
 var devices = require('../lib/devices');
 
 
