@@ -20,7 +20,7 @@ var Tinkerforge = require('tinkerforge');
 var devices = require('../lib/devices');
 
 module.exports = function(RED) {
-	function tinkerForgeRotaryPoti(n) {
+	function tinkerForgeRotaryPotiV2(n) {
         RED.nodes.createNode(this,n);
         this.device = n.device;
         this.sensor = n.sensor;
@@ -65,5 +65,5 @@ module.exports = function(RED) {
 
     }
 
-    RED.nodes.registerType('TinkerForge RotaryPotiV2', tinkerForgeRotaryPoti);
+    RED.nodes.registerType('TinkerForge RotaryPotiV2', tinkerForgeRotaryPotiV2);
 };

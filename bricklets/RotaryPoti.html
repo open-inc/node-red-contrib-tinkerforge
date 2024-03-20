@@ -11,7 +11,7 @@
 -  limitations under the License.
 -->
 
-<script type="text/x-red" data-template-name="TinkerForge RotaryPoti">
+<script type="text/x-red" data-template-name="TinkerForge RotaryPotiV2">
 	<div class="form-row">
         <label for="node-input-device"><i class="fa fa-tasks"></i> Device</label>
         <input type="text" id="node-input-device" >
@@ -34,7 +34,7 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="TinkerForge RotaryPoti">
+<script type="text/x-red" data-help-name="TinkerForge RotaryPotiV2">
 	<p>A input node to poll the value from a Tinkerforge RotaryPoti bricklet</p>
 	<p>Configuration options are:</p>
 	<ul>
@@ -48,7 +48,7 @@
 </script>
 
 <script type="text/javascript">
-	RED.nodes.registerType("TinkerForge RotaryPoti",{
+	RED.nodes.registerType("TinkerForge RotaryPotiV2",{
 		category: 'TinkerForge',
 		defaults: {
 			device: {type: "TinkerForgeConfig", required: true},
@@ -60,9 +60,9 @@
 		outputs: 1,
 		inputs: 0,
 		label: function() {
-			return this.name || "TinkerForge RotaryPoti";
+			return this.name || "TinkerForge RotaryPotiV2";
 		},
-		paletteLabel: 'RotaryPoti',
+		paletteLabel: 'RotaryPotiV2',
 		color: 'gray',
 		icon: 'tf.png',
 		oneditprepare: function() {
