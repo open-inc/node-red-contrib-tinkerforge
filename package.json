@@ -6,7 +6,7 @@
   "description": "Node-RED nodes to access Tinkerforge Sensors",
   "dependencies": {
     "body-parser": "^1.15.1",
-    "tinkerforge": "^2.1.35"
+    "tinkerforge-openinc": "^2.1.35-1"
   },
   "devDependencies": {},
   "scripts": {
