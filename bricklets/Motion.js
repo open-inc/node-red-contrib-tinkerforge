@@ -38,14 +38,17 @@ module.exports = function(RED) {
             }
         });
 
-        node.ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
-        function(connectReason) {
+        try {
+            node.ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED, function(connectReason) {
             node.md = new Tinkerforge.BrickletMotionDetector(node.sensor, node.ipcon);
             node.md.on(Tinkerforge.BrickletMotionDetector.CALLBACK_MOTION_DETECTED,detected);
 
             // Register detection cycle ended callback
             node.md.on(Tinkerforge.BrickletMotionDetector.CALLBACK_DETECTION_CYCLE_ENDED,ended);
-        });
+            });
+        } catch(e) {
+            
+        }
 
         var detected = function () {
             node.send({
