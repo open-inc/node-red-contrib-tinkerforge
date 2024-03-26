@@ -11,7 +11,7 @@
 -  limitations under the License.
 -->
 
-<script type="text/x-red" data-template-name="TinkerForge RGBButton">
+<script type="text/x-red" data-template-name="TinkerForge LCD">
 	<div class="form-row">
         <label for="node-input-device"><i class="fa fa-tasks"></i> Device</label>
         <input type="text" id="node-input-device" >
@@ -26,21 +26,18 @@
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="RGB LED Button">
+        <input type="text" id="node-input-name" placeholder="RGB Light">
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="TinkerForge RGBButton">
-	<p>A input node to poll the value from a Tinkerforge RGB LED Button bricklet</p>
-	<p>Configuration options are:</p>
-	<p>Output:</p>
-	<ul>
-		<li>msg.payload - State of the Button</li>
-	</ul>
+<script type="text/x-red" data-help-name="TinkerForge LCD">
+	<p>A node for the big LCD Bricklet</p>
+	<p>Input should be msg.text = ""</p>
+	
 </script>
 
 <script type="text/javascript">
-	RED.nodes.registerType("TinkerForge RGBButton", {
+	RED.nodes.registerType("TinkerForge LCD", {
 		category: 'TinkerForge',
 		defaults: {
 			device: { type: "TinkerForgeConfig", required: true },
@@ -48,12 +45,12 @@
 			name: {},
 			topic: {}
 		},
-		outputs: 1,
-		inputs: 0,
+		outputs: 0,
+		inputs: 1,
 		label: function () {
-			return this.name || "TinkerForge RGBButton";
+			return this.name || "TinkerForge LCD";
 		},
-		paletteLabel: 'RGBButton',
+		paletteLabel: 'LCD',
 		color: 'gray',
 		icon: 'tf.png',
 		oneditprepare: function () {
@@ -61,7 +58,7 @@
 
 			if (node.device) {
 				var key = $('#node-input-device').val();
-				$.getJSON('TinkerForge/' + key + "/sensors/" + 282, function (data) {
+				$.getJSON('TinkerForge/' + key + "/sensors/" + 298, function (data) {
 					$('#node-input-sensor').find('option').remove().end();
 					for (d in data) {
 						$('<option/>', {
@@ -81,7 +78,7 @@
 				var dev = $('#node-input-device').val();
 				if (dev) {
 					var key = dev;
-					$.getJSON('TinkerForge/' + key + "/sensors/" + 282, function (data) {
+					$.getJSON('TinkerForge/' + key + "/sensors/" + 298, function (data) {
 						$('#node-input-sensor').find('option').remove().end();
 						for (d in data) {
 							$('<option/>', {

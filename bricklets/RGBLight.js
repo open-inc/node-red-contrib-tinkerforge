@@ -19,7 +19,7 @@ var Tinkerforge = require("tinkerforge-openinc");
 var devices = require("../lib/devices");
 
 module.exports = function (RED) {
-  function tinkerForgeRGBButton(n) {
+  function tinkerForgeRGBLight(n) {
     RED.nodes.createNode(this, n);
     this.device = n.device;
     this.sensor = n.sensor;
@@ -45,14 +45,23 @@ module.exports = function (RED) {
   node.ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
     function(connectReason) {
         node.md = new Tinkerforge.BrickletRGBLEDButton(node.sensor, node.ipcon);
-        node.md.on(Tinkerforge.BrickletRGBLEDButton.CALLBACK_BUTTON_STATE_CHANGED,function (e) {
-          node.md.setColor(Math.random()*255,Math.random()*255,Math.random()*255, ()=>{},()=>{})
-          node.send({
-              topic: node.topic || "state",
-              payload: e==Tinkerforge.BrickletRGBLEDButton.BUTTON_STATE_PRESSED ? 1 : 0
-          });
-      });
+         
+          
     });
+
+    node.on('input', function(msg){
+      if(node.md) {
+              if (msg.color.length == 3) {
+                if(typeof msg.color[0] === 'number' && typeof msg.color[1] === 'number' && typeof msg.color[2] === 'number') {
+                node.md.setColor(msg.color[0],msg.color[1],msg.color[2], ()=>{},()=>{})
+              } else {
+                node.error("Wrong Format: e.g. msg.color = [255,0,100]");
+            }
+              } else {
+                node.error("Wrong Format: e.g. msg.color = [255,0,100]");
+            }
+      }
+  });
 
 
 
@@ -62,5 +71,5 @@ module.exports = function (RED) {
     });
   }
 
-  RED.nodes.registerType("TinkerForge RGBButton", tinkerForgeRGBButton);
+  RED.nodes.registerType("TinkerForge RGBLight", tinkerForgeRGBLight);
 };
