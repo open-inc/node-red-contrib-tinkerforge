@@ -19,6 +19,8 @@ Currently there are nodes for the following bricklets
 - Motion Detector V2 Bricklet
 - Rotary Poti V2 Bricklet
 - Distance IR V2 Bricklet
+- LCD 128x64 Bricklet
+- RGB LED Button Bricklet
 
 Adding more should be pretty trivial, these are just the bricks I currently
 access to for testing
