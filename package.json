@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-tinkerforge-openinc",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "description": "Node-RED Nodes to access Tinkerforge Sensors",
   "dependencies": {
     "body-parser": "^1.15.1",

@@ -49,6 +49,8 @@ module.exports = function (RED) {
           node.ipcon
         );
 
+        node.t.setEnable(true);
+
         node.interval = setInterval(function () {
           if (node.t) {
             node.t.getDistance(

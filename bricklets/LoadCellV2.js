@@ -46,13 +46,16 @@ module.exports = function (RED) {
       function (connectReason) {
         node.t = new Tinkerforge.BrickletLoadCellV2(node.sensor, node.ipcon);
 
+        node.debug("Tare the LoadCellV2");
+        node.t.tare();
+
         node.interval = setInterval(function () {
           if (node.t) {
-            node.t.getDistance(
-              function (distance) {
+            node.t.getWeight(
+              function (weight) {
                 node.send({
                   topic: node.topic || "LoadCellV2",
-                  payload: distance,
+                  payload: weight,
                 });
               },
               function (err) {
@@ -71,5 +74,5 @@ module.exports = function (RED) {
     });
   }
 
-  RED.nodes.registerType("TinkerForge LoadCellV2", tinkerForgeLoadCellV2);
+  RED.nodes.registerType("TinkerForge LoadCellV2", tinkerForgeLoadCellV22);
 };

@@ -26,6 +26,10 @@ module.exports = function (RED) {
     this.name = n.name;
     this.topic = n.topic;
     this.pollTime = n.pollTime;
+    this.channel1type = n.channel1type;
+    this.channel2type = n.channel2type;
+    this.channel3type = n.channel3type;
+    this.channel4type = n.channel4type;
     var node = this;
 
     node.ipcon = new Tinkerforge.IPConnection(); //devices[this.device].ipcon;
@@ -44,18 +48,47 @@ module.exports = function (RED) {
     node.ipcon.on(
       Tinkerforge.IPConnection.CALLBACK_CONNECTED,
       function (connectReason) {
-        node.t = new Tinkerforge.IndustrialDigitalIn4V2(
+        node.t = new Tinkerforge.BrickletIndustrialDigitalIn4V2(
           node.sensor,
           node.ipcon
         );
 
+        node.t.setEdgeCountConfiguration(0, this.channel1type);
+        node.t.setEdgeCountConfiguration(1, this.channel2type);
+        node.t.setEdgeCountConfiguration(2, this.channel3type);
+        node.t.setEdgeCountConfiguration(3, this.channel4type);
+
         node.interval = setInterval(function () {
           if (node.t) {
-            node.t.getDistance(
-              function (distance) {
-                node.send({
-                  topic: node.topic || "IndustrialDigitalIn4V2",
-                  payload: distance,
+            node.t.getEdgeCount(
+              0,
+              false,
+              function (one) {
+                var hu = {
+                  topic: node.topic || "Channel",
+                  payload: one,
+                };
+
+                node.t.getEdgeCount(1, false, function (two) {
+                  var te = {
+                    topic: node.topic || "Channel",
+                    payload: [one, two],
+                  };
+
+                  node.t.getEdgeCount(2, false, function (three) {
+                    var ba = {
+                      topic: node.topic || "Channel",
+                      payload: [one, two, three],
+                    };
+
+                    node.t.getEdgeCount(3, false, function (four) {
+                      var fo = {
+                        topic: node.topic || "Channel",
+                        payload: [one, two, three, four],
+                      };
+                      node.send(fo);
+                    });
+                  });
                 });
               },
               function (err) {

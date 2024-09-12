@@ -48,11 +48,11 @@ module.exports = function (RED) {
 
         node.interval = setInterval(function () {
           if (node.t) {
-            node.t.getDistance(
-              function (distance) {
+            node.t.getEnergyData(
+              function (a, amps, c, d) {
                 node.send({
                   topic: node.topic || "EnergyMonitor",
-                  payload: distance,
+                  payload: amps / 100,
                 });
               },
               function (err) {

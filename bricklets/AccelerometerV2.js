@@ -51,11 +51,11 @@ module.exports = function (RED) {
 
         node.interval = setInterval(function () {
           if (node.t) {
-            node.t.getDistance(
-              function (distance) {
+            node.t.getAcceleration(
+              function (x, y, z) {
                 node.send({
                   topic: node.topic || "AccelerometerV2",
-                  payload: distance,
+                  payload: [x / 10000, y / 10000, z / 10000],
                 });
               },
               function (err) {

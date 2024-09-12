@@ -24,18 +24,41 @@
         <label for="node-input-pollTime"><i class="fa fa-clock"></i> Poll Interval</label>
         <input type="number" id="node-input-pollTime" >
     </div>
+	<p>Channel Types: The edge type parameter configures if rising edges, falling edges or both are
+	</p><p>counted. Possible edge types are:</p>
+		<ul>
+			<li>0 = rising</li>
+			<li>1 = falling</li>
+			<li>2 = both</li>
+		</ul>
+	<div class="form-row">
+        <label for="node-input-channel1type"><i class="fa fa-clock"></i> Channel1 Type</label>
+        <input type="number" id="node-input-channel1type" >
+    </div>
+	<div class="form-row">
+        <label for="node-input-channel2type"><i class="fa fa-clock"></i> Channel2 Type</label>
+        <input type="number" id="node-input-channel2type" >
+    </div>
+	<div class="form-row">
+        <label for="node-input-channel3type"><i class="fa fa-clock"></i> Channel3 Type</label>
+        <input type="number" id="node-input-channel3type" >
+    </div>
+	<div class="form-row">
+        <label for="node-input-channel4type"><i class="fa fa-clock"></i> Channel4 Type</label>
+        <input type="number" id="node-input-channel4type" >
+    </div>
     <div class="form-row">
         <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
         <input type="text" id="node-input-topic" placeholder="Topic">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="DistanceIRV2">
+        <input type="text" id="node-input-name" placeholder="IndustrialDigitalIn4V2">
     </div>
 </script>
 
 <script type="text/x-red" data-help-name="TinkerForge IndustrialDigitalIn4V2">
-	<p>An input node to poll the value from a Tinkerforge DistanceIR V2.0 bricklet</p>
+	<p>An input node to poll the value from a Tinkerforge IndustrialDigitalIn V2.0 bricklet</p>
 	<p>Configuration options are:</p>
 	<ul>
 		<li>Poll time - time in seconds between reading current value</li>
@@ -43,7 +66,7 @@
 	<p></p>
 	<p>Output:</p>
 	<ul>
-		<li>msg.payload - distance in cm</li>
+		<li>msg.payload - #count of switches [channel1, channel2, channel3, channel4]</li>
 	</ul>
 </script>
 
@@ -54,6 +77,10 @@
 			device: {type: "TinkerForgeConfig", required: true},
 			sensor: {required: true},
 			pollTime: {value: "1", required: true},
+			channel1type: {value: 0, required: true},
+			channel2type: {value: 0, required: true},
+			channel3type: {value: 0, required: true},
+			channel4type: {value: 0, required: true},
 			name: {},
 			topic: {}
 		},

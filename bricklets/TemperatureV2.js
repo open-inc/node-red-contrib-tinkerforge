@@ -48,11 +48,11 @@ module.exports = function (RED) {
 
         node.interval = setInterval(function () {
           if (node.t) {
-            node.t.getDistance(
-              function (distance) {
+            node.t.getTemperature(
+              function (temp) {
                 node.send({
                   topic: node.topic || "TemperatureV2",
-                  payload: distance,
+                  payload: temp / 100,
                 });
               },
               function (err) {

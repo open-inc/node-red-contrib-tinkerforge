@@ -21,6 +21,12 @@ Currently there are nodes for the following bricklets
 - Distance IR V2 Bricklet
 - LCD 128x64 Bricklet
 - RGB LED Button Bricklet
+- Accelerometer V2 Bricklet
+- Energy Monitor Bricklet
+- Industrial Digital In 4 V2 Bricklet
+- Laser Range Finder V2 Bricklet
+- Load Cell V2 Bricklet
+- Temperature V2 Bricklet
 
 Adding more should be pretty trivial, these are just the bricks I currently
 access to for testing
