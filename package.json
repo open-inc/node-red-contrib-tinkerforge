@@ -42,6 +42,7 @@
       "industrialDigital": "bricklets/IndustrialDigitalIn4V2.js",
       "laserrange": "bricklets/LaserRangeFinderV2.js",
       "load": "bricklets/LoadCellV2.js",
+      "ledV2": "bricklets/LEDBrickletV2.js",
       "temperature": "bricklets/TemperatureV2.js",
       "humidityV2": "bricklets/HumidityV2.js",
       "rotaryPoti": "bricklets/RotaryPoti.js",

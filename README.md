@@ -27,6 +27,7 @@ Currently there are nodes for the following bricklets
 - Laser Range Finder V2 Bricklet
 - Load Cell V2 Bricklet
 - Temperature V2 Bricklet
+- LED Strip V2 Bricklet
 
 Adding more should be pretty trivial, these are just the bricks I currently
 access to for testing
