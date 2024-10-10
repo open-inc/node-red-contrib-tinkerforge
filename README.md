@@ -28,6 +28,8 @@ Currently there are nodes for the following bricklets
 - Load Cell V2 Bricklet
 - Temperature V2 Bricklet
 - LED Strip V2 Bricklet
+- DC V2 Bricklet
+- Servo V2 Bricklet (only Position for Servo 0)
 
 Adding more should be pretty trivial, these are just the bricks I currently
 access to for testing
