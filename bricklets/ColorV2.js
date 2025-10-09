@@ -49,10 +49,35 @@ module.exports = function (RED) {
         node.interval = setInterval(function () {
           if (node.t) {
             node.t.getColor(
-              function (color) {
+              function (r, g, b, c) {
+                // getColor gibt 4 Werte zurück: r (Rot), g (Grün), b (Blau), c (Clear/Helligkeit)
+                console.log(
+                  "ColorV2 Rohwerte - R:",
+                  r,
+                  "G:",
+                  g,
+                  "B:",
+                  b,
+                  "C:",
+                  c
+                );
+
                 node.send({
                   topic: node.topic || "ColorV2",
-                  payload: color,
+                  payload: {
+                    r: r, // Rot (0-65535)
+                    g: g, // Grün (0-65535)
+                    b: b, // Blau (0-65535)
+                    c: c, // Clear/Helligkeit (0-65535)
+                    rgb:
+                      "rgb(" +
+                      Math.round(r / 257) +
+                      "," +
+                      Math.round(g / 257) +
+                      "," +
+                      Math.round(b / 257) +
+                      ")", // CSS RGB-Wert (0-255)
+                  },
                 });
               },
               function (err) {
