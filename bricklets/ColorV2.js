@@ -44,7 +44,7 @@ module.exports = function (RED) {
     node.ipcon.on(
       Tinkerforge.IPConnection.CALLBACK_CONNECTED,
       function (connectReason) {
-        node.t = new Tinkerforge.BrickletTemperatureV2(node.sensor, node.ipcon);
+        node.t = new Tinkerforge.BrickletColorV2(node.sensor, node.ipcon);
 
         node.interval = setInterval(function () {
           if (node.t) {

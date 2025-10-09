@@ -26,6 +26,7 @@ module.exports = function (RED) {
     this.name = n.name;
     this.topic = n.topic;
     this.pollTime = n.pollTime;
+    this.servoChannel = parseInt(n.servoChannel) || 0;
     var node = this;
 
     node.ipcon = new Tinkerforge.IPConnection();
@@ -45,15 +46,20 @@ module.exports = function (RED) {
       Tinkerforge.IPConnection.CALLBACK_CONNECTED,
       function (connectReason) {
         node.md = new Tinkerforge.BrickletServoV2(node.sensor, node.ipcon);
-        // Funktion, um Servo 0 zu aktivieren
+        // Aktiviere den konfigurierten Servo-Kanal
         node.md.setEnable(
-          0,
+          node.servoChannel,
           true,
           function () {
-            console.log("Servo 0 erfolgreich aktiviert.");
+            console.log(
+              "Servo " + node.servoChannel + " erfolgreich aktiviert."
+            );
           },
           function (error) {
-            console.error("Fehler beim Aktivieren des Servos: ", error);
+            console.error(
+              "Fehler beim Aktivieren von Servo " + node.servoChannel + ": ",
+              error
+            );
           }
         );
       }
@@ -61,14 +67,32 @@ module.exports = function (RED) {
 
     node.on("input", function (msg) {
       if (node.md) {
+        // Kanal aus msg.channel oder Config verwenden
+        var channel =
+          typeof msg.channel !== "undefined"
+            ? parseInt(msg.channel)
+            : node.servoChannel;
+
+        // Position aus msg.payload
+        var position = parseInt(msg.payload);
+
         node.md.setPosition(
-          0,
-          msg.payload,
+          channel,
+          position,
           function () {
-            console.log("Servo 0 erfolgreich positioniert.");
+            console.log(
+              "Servo " +
+                channel +
+                " erfolgreich auf Position " +
+                position +
+                " gesetzt."
+            );
           },
           function (error) {
-            console.error("Fehler beim Positionieren des Servos: ", error);
+            console.error(
+              "Fehler beim Positionieren von Servo " + channel + ": ",
+              error
+            );
           }
         );
       }
