@@ -30,7 +30,7 @@ Currently there are nodes for the following bricklets
 - LED Strip V2 Bricklet
 - DC V2 Bricklet
 - Color V2 Bricklet
-- Servo V2 Bricklet (only Position for Servo 0)
+- Servo V2 Bricklet
 
 Adding more should be pretty trivial, these are just the bricks I currently
 access to for testing

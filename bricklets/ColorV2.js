@@ -62,27 +62,45 @@ module.exports = function (RED) {
                   c
                 );
 
+                // Konvertierung von 16-bit (0-65535) zu 8-bit (0-255) für CSS RGB
+                var r8 = Math.round((r / 65535) * 255);
+                var g8 = Math.round((g / 65535) * 255);
+                var b8 = Math.round((b / 65535) * 255);
+
+                // Alternative: Normalisierung über Clear-Wert (falls c > 0)
+                var rNorm = c > 0 ? Math.round((r / c) * 255) : r8;
+                var gNorm = c > 0 ? Math.round((g / c) * 255) : g8;
+                var bNorm = c > 0 ? Math.round((b / c) * 255) : b8;
+
+                // Begrenze auf 0-255
+                rNorm = Math.min(255, Math.max(0, rNorm));
+                gNorm = Math.min(255, Math.max(0, gNorm));
+                bNorm = Math.min(255, Math.max(0, bNorm));
+
                 node.send({
                   topic: node.topic || "ColorV2",
                   payload: {
-                    r: r, // Rot (0-65535)
-                    g: g, // Grün (0-65535)
-                    b: b, // Blau (0-65535)
+                    r: r, // Rot Rohwert (0-65535)
+                    g: g, // Grün Rohwert (0-65535)
+                    b: b, // Blau Rohwert (0-65535)
                     c: c, // Clear/Helligkeit (0-65535)
-                    rgb:
-                      "rgb(" +
-                      Math.round(r / 257) +
-                      "," +
-                      Math.round(g / 257) +
-                      "," +
-                      Math.round(b / 257) +
-                      ")", // CSS RGB-Wert (0-255)
+                    r8: r8, // Rot 8-bit (0-255)
+                    g8: g8, // Grün 8-bit (0-255)
+                    b8: b8, // Blau 8-bit (0-255)
+                    rgb: "rgb(" + r8 + "," + g8 + "," + b8 + ")", // CSS RGB
+                    rgbNormalized:
+                      "rgb(" + rNorm + "," + gNorm + "," + bNorm + ")", // Normalisiert über Clear
+                    hex:
+                      "#" +
+                      ("0" + r8.toString(16)).slice(-2) +
+                      ("0" + g8.toString(16)).slice(-2) +
+                      ("0" + b8.toString(16)).slice(-2), // HEX-Format
                   },
                 });
               },
               function (err) {
                 //error
-                node.error("PTC - " + err);
+                node.error("ColorV2 Error - " + err);
               }
             );
           }
