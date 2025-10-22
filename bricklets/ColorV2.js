@@ -45,6 +45,17 @@ module.exports = function (RED) {
       Tinkerforge.IPConnection.CALLBACK_CONNECTED,
       function (connectReason) {
         node.t = new Tinkerforge.BrickletColorV2(node.sensor, node.ipcon);
+        if (node.t) {
+          node.t.setLight(
+            true,
+            function () {
+              // Beleuchtung erfolgreich aktiviert
+            },
+            function (err) {
+              node.warn("Konnte Sensor-Beleuchtung nicht aktivieren: " + err);
+            }
+          );
+        }
 
         node.interval = setInterval(function () {
           if (node.t) {
@@ -67,12 +78,13 @@ module.exports = function (RED) {
                 var g8 = Math.round((g / 65535) * 255);
                 var b8 = Math.round((b / 65535) * 255);
 
-                // Alternative: Normalisierung über Clear-Wert (falls c > 0)
-                var rNorm = c > 0 ? Math.round((r / c) * 255) : r8;
-                var gNorm = c > 0 ? Math.round((g / c) * 255) : g8;
-                var bNorm = c > 0 ? Math.round((b / c) * 255) : b8;
+                // Verbesserte Normalisierung: verhindert Überbelichtung
+                var maxRaw = Math.max(r, g, b);
+                var rNorm = maxRaw > 0 ? Math.round((r / maxRaw) * 255) : r8;
+                var gNorm = maxRaw > 0 ? Math.round((g / maxRaw) * 255) : g8;
+                var bNorm = maxRaw > 0 ? Math.round((b / maxRaw) * 255) : b8;
 
-                // Begrenze auf 0-255
+                // Begrenze auf 0-255 (sollte durch obige Berechnung nicht nötig sein)
                 rNorm = Math.min(255, Math.max(0, rNorm));
                 gNorm = Math.min(255, Math.max(0, gNorm));
                 bNorm = Math.min(255, Math.max(0, bNorm));
@@ -110,6 +122,17 @@ module.exports = function (RED) {
 
     node.on("close", function () {
       clearInterval(node.interval);
+      if (node.t) {
+        node.t.setLight(
+          false,
+          function () {
+            // Beleuchtung erfolgreich deaktiviert
+          },
+          function (err) {
+            node.warn("Konnte Sensor-Beleuchtung nicht deaktivieren: " + err);
+          }
+        );
+      }
       node.ipcon.disconnect();
     });
   }
